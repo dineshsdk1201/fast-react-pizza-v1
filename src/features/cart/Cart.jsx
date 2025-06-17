@@ -28,14 +28,16 @@ function Cart() {
   const cart = fakeCart;
 
   return (
-    <div className="px-4 py-3">
+    <div>
       <Link to="/menu">&larr; Back to menu</Link>
 
-      <h2 className="mt-7 text-xl font-semibold">Your cart, %NAME%</h2>
+      <h2>Your cart, %NAME%</h2>
 
       <div>
-        <LinkButton to="/order/new">Order pizzas</LinkButton>
-        <LinkButton>Clear cart</LinkButton>
+        {/* <LinkButton to="/order/new">Order pizzas</LinkButton>
+        <LinkButton>Clear cart</LinkButton> */}
+        <button to="/order/new">Order Pizzas</button>
+        <button>Clear cart</button>
       </div>
     </div>
   );
