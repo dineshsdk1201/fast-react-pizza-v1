@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Form, redirect, useActionData, useNavigate } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCart } from "../cart/CartSlice";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -36,11 +37,17 @@ const fakeCart = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const user = useSelector((store) => store.user);
-  const cart = fakeCart;
+  const dispatch = useDispatch();
+  // const cart = fakeCart;
+  const cart = useSelector((store) => store.cart.cart);
   const formerrors = useActionData();
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   // console.log(formerrors?.phone);
+
+  function handleOrder() {
+    dispatch(deleteCart());
+  }
 
   return (
     <div className="px-4 py-6">
