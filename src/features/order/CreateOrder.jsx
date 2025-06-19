@@ -5,6 +5,7 @@ import Button from "../../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCart } from "../cart/CartSlice";
 import store from "../../store";
+import { fetchAddress } from "../user/UserSlice";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -37,7 +38,8 @@ const fakeCart = [
 
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
-  const user = useSelector((store) => store.user);
+  const { name, position, address } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
   // const cart = fakeCart;
   const cart = useSelector((store) => store.cart.cart);
@@ -45,6 +47,11 @@ function CreateOrder() {
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   // console.log(formerrors?.phone);
+
+  // function h() {
+  //   console.log("fetch address");
+  //   dispatch(fetchAddress());
+  // }
 
   return (
     <div className="px-4 py-6">
@@ -58,7 +65,7 @@ function CreateOrder() {
             name="customer"
             required
             className="input grow"
-            defaultValue={user.name}
+            defaultValue={name}
           />
         </div>
 
@@ -84,8 +91,21 @@ function CreateOrder() {
               name="address"
               required
               className="input w-full"
+              defaultValue={address}
             />
           </div>
+          {!address && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("lllllllll");
+                dispatch(fetchAddress());
+              }}
+              type="small"
+            >
+              Get Location
+            </Button>
+          )}
         </div>
 
         <div className="mb-12 flex items-center gap-5">
@@ -110,6 +130,7 @@ function CreateOrder() {
           >
             {isSubmitting ? "Placing Order" : "Order now"}
           </Button>
+
           <p style={{ color: cart.length >= 1 ? "green" : "red" }}>
             {cart.length === 0
               ? "Add atleast one pizza to put the order"
