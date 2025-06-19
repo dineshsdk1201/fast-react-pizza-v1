@@ -88,6 +88,13 @@ function Order() {
 
       <div className="space-y-2 bg-stone-200 px-6 py-5">
         <p className="text-sm font-medium text-stone-600">
+          Note this id:
+          <strong>
+            <i style={{ color: "green" }}> {id}</i>
+          </strong>{" "}
+          for tracking purpose
+        </p>
+        <p className="text-sm font-medium text-stone-600">
           Price pizza: {formatCurrency(orderPrice)}
         </p>
         {priority && (
