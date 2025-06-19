@@ -4,6 +4,7 @@ import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCart } from "../cart/CartSlice";
+import store from "../../store";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -35,7 +36,7 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
-  // const [withPriority, setWithPriority] = useState(false);
+  const [withPriority, setWithPriority] = useState(false);
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   // const cart = fakeCart;
@@ -44,10 +45,6 @@ function CreateOrder() {
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   // console.log(formerrors?.phone);
-
-  function handleOrder() {
-    dispatch(deleteCart());
-  }
 
   return (
     <div className="px-4 py-6">
@@ -97,9 +94,8 @@ function CreateOrder() {
             name="priority"
             id="priority"
             className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
-
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label htmlFor="priority" className="font-medium">
             Want to yo give your order priority?
@@ -108,9 +104,17 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button disabled={isSubmitting} type="primary">
+          <Button
+            disabled={isSubmitting}
+            type={cart.length ? "primary" : "secondary"}
+          >
             {isSubmitting ? "Placing Order" : "Order now"}
           </Button>
+          <p style={{ color: cart.length >= 1 ? "green" : "red" }}>
+            {cart.length === 0
+              ? "Add atleast one pizza to put the order"
+              : "Good to go👉"}
+          </p>
         </div>
       </Form>
     </div>
@@ -125,7 +129,7 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart),
-    priority: data.priority === "on",
+    priority: data.priority === "true",
   };
   console.log(order);
   let errors = {};
@@ -136,6 +140,9 @@ export async function action({ request }) {
 
   if (!Object.keys(errors).length > 0) {
     const newOrder = await createOrder(order);
+
+    //Do Not overuse
+    store.dispatch(deleteCart());
 
     return redirect(`/order/${newOrder.id}`);
   }

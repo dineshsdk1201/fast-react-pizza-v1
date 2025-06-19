@@ -34,6 +34,14 @@ const CartSlice = createSlice({
     },
   },
 });
+
+//Selectors
+
+export const getCartLength = function (state) {
+  const cartLength = state.cart.cart.length;
+  return cartLength > 0;
+};
+
 export const {
   addItem,
   deleteItem,

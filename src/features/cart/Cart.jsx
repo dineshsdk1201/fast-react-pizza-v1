@@ -1,7 +1,10 @@
 import { Link, useSearchParams } from "react-router-dom";
 import LinkButton from "../../ui/LinkButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./CartItem";
+import EmptyCart from "./EmptyCart";
+import Button from "../../ui/Button";
+import { deleteCart } from "./CartSlice";
 // const fakeCart = [
 //   {
 //     pizzaId: 12,
@@ -29,21 +32,30 @@ import CartItem from "./CartItem";
 function Cart() {
   // const cart = fakeCart;
   const userName = useSelector((store) => store.user.name);
+  const dispatch = useDispatch();
   const cart = useSelector((store) => store.cart.cart);
 
   return (
     <div className="px-4 py-3">
-      <Link to="/menu">&larr; Back to menu</Link>
-
       <h2 className="mt-7 text-xl font-semibold">Your cart, {userName}</h2>
 
       <div>
-        <LinkButton to="/order/new">Order pizzas</LinkButton>
-        <LinkButton>Clear cart</LinkButton>
         {cart.map((item) => (
           <CartItem item={item} key={item.pizzaId} />
         ))}
-        {cart.length === 0 && <p>Add more pizzas from menu</p>}
+        {cart.length === 0 && <EmptyCart />}
+      </div>
+      <div className="mt-7 text-xl font-semibold mx-2 flex gap-2 items-center">
+        <Button to="/order/new" type="small">
+          Order pizzas
+        </Button>
+        <LinkButton
+          onClick={() => {
+            dispatch(deleteCart());
+          }}
+        >
+          Clear cart
+        </LinkButton>
       </div>
     </div>
   );
