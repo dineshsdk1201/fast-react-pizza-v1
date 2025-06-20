@@ -10,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import OrderItem from "./OrderItem";
+import UpdateOrder from "./UpdateOrder";
 
 // const order = {
 //   id: "ABCDEF",
@@ -57,8 +58,8 @@ function Order() {
     },
     [fetcher]
   );
-  console.log(fetcher.data);
-  console.log(order);
+  // console.log(fetcher.data);
+  // console.log(order);
   const {
     id,
     status,
@@ -131,6 +132,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { getCartLength } from "../features/cart/CartSlice";
 function AppLayout() {
   const navigation = useNavigation();
   const ValidCart = useSelector(getCartLength);
-  console.log(ValidCart);
+
   const isLoading = navigation.state === "loading";
 
   return (

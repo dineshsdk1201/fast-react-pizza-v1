@@ -6,6 +6,7 @@ import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder";
 import Order, { loader as loadOrder } from "./features/order/Order";
+import { action as updateOrderAction } from "./features/order/UpdateOrder";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 function App() {
@@ -34,6 +35,7 @@ function App() {
           path: "/order/:orderId",
           element: <Order />,
           loader: loadOrder,
+          action: updateOrderAction,
         },
       ],
     },
