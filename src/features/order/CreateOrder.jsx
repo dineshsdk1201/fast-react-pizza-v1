@@ -124,6 +124,15 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.latitude && position.longitude
+                ? JSON.stringify(position)
+                : ""
+            }
+          />
           <Button
             disabled={isSubmitting}
             type={cart.length ? "primary" : "secondary"}
@@ -147,6 +156,8 @@ export async function action({ request }) {
   console.log(formData);
   const data = Object.fromEntries(formData);
   console.log(data);
+  const sdk = JSON.parse(data.position);
+  console.log(sdk);
   const order = {
     ...data,
     cart: JSON.parse(data.cart),
