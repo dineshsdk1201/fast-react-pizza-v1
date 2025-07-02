@@ -8,11 +8,11 @@ function User({ type }) {
   if (type === "content") {
     return (
       <div>
-        <h4 style={{ paddingBottom: "20px" }}>
+        <h4 className="p-5">
           Welcome
           <strong>
-            <i> {userName}</i>
-          </strong>{" "}
+            <i className="px-1">{userName}</i>
+          </strong>
           Shoot your order🔫
         </h4>
         <Button type="primary" to="/menu">
@@ -23,9 +23,9 @@ function User({ type }) {
   }
   return (
     <div>
-      <p style={{ textTransform: "lowercase" }}>
+      <p className="sm:block hidden">
         Hello,
-        <strong style={{ textTransform: "uppercase" }}>{userName}</strong>
+        <strong className="uppercase">{userName}</strong>
       </p>
     </div>
   );

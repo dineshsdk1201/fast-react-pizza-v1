@@ -21,8 +21,7 @@ function Button({ children, disabled, to, type, onClick }) {
     return (
       <button
         disabled={disabled}
-        className={styles[type]}
-        style={{ height: "50px" }}
+        className={`${styles[type]} h-12`}
         onClick={onClick}
       >
         {children}
@@ -30,11 +29,7 @@ function Button({ children, disabled, to, type, onClick }) {
     );
   }
   return (
-    <button
-      disabled={disabled}
-      className={styles[type]}
-      style={{ height: "50px" }}
-    >
+    <button disabled={disabled} className={`${styles[type]} h-12`}>
       {children}
     </button>
   );
