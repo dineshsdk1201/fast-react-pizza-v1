@@ -6,6 +6,7 @@ import { addItem, deleteItem } from "../cart/CartSlice";
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
   const cart = useSelector((store) => store.cart.cart);
+
   // console.log(cart.map((c) => c.pizzaId));
   const cartIds = cart.map((c) => c.pizzaId);
   console.log(cartIds);

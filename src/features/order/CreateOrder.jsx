@@ -43,6 +43,8 @@ function CreateOrder() {
   const dispatch = useDispatch();
   // const cart = fakeCart;
   const cart = useSelector((store) => store.cart.cart);
+  const noCart = cart.length < 0;
+
   const formerrors = useActionData();
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
@@ -136,6 +138,7 @@ function CreateOrder() {
           <Button
             disabled={isSubmitting}
             type={cart.length ? "primary" : "secondary"}
+            isCart={noCart}
           >
             {isSubmitting ? "Placing Order" : "Order now"}
           </Button>

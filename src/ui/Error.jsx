@@ -10,7 +10,10 @@ function Error() {
         Something went wrong 😢
       </h1>
       <p className="text-indigo-400 text-sm">{error.data || error.message}</p>
-      <button onClick={() => navigate(-1)} className="text-blue-300 text-xl ">
+      <button
+        onClick={() => navigate(-1)}
+        className="text-blue-300 text-xl cursor-pointer"
+      >
         &larr; Go back
       </button>
     </div>
